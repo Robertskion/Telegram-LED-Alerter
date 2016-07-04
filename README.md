@@ -19,11 +19,12 @@ Works with RaspberyPi and Pine64 with RPi.GPIO Python libraries in BCM mode.
   ```
   sudo apt-get update
   sudo apt-get install build-essential python3-pip python3-dev git
-  pip3 install telepot
+  pip3.5 install telepot
   ```
+  
+If the last command fail, you need to compille yourself Pythton 3.5 who is needed for asyncio module.
 
-You need to have Python 3.5 *(available on Debian testing/Ubuntu 16.04 LTS)*.
-To check the Python version type ```python3 --version```
+Python 3.5 is available on Debian testing and Ubuntu 16.04 LTS. To check the Python version installed on system, type ```python3 --version```
 
 - Build Python 3.5:
   
@@ -37,7 +38,7 @@ To check the Python version type ```python3 --version```
   ./configure
   make
   sudo make install
-  pip3 install telepot
+  pip3.5 install telepot
   ```
 
 - Install [RPi.GPIO for RaspberryPi](https://pypi.python.org/pypi/RPi.GPIO):
