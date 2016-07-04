@@ -21,7 +21,25 @@ Works with RaspberyPi and Pine64 with RPi.GPIO Python libraries in BCM mode.
   sudo apt-get install build-essential python3-pip python3-dev git
   pip3 install telepot
   ```
+
+You need to have Python 3.5 *(available on Debian testing/Ubuntu 16.04 LTS)*.
+To check the Python version type ```python3 --version```
+
+- Build Python 3.5:
   
+  ```
+  sudo apt-get update
+  sudo apt-get install libssl-dev openssl libreadline-dev
+  cd ~
+  wget https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tgz
+  tar zxf Python-3.5.2.tgz
+  cd Python-3.5.2
+  ./configure
+  make
+  sudo make install
+  pip3 install telepot
+  ```
+
 - Install [RPi.GPIO for RaspberryPi](https://pypi.python.org/pypi/RPi.GPIO):
 
   ```
@@ -40,6 +58,7 @@ Works with RaspberyPi and Pine64 with RPi.GPIO Python libraries in BCM mode.
 ## How to use
 
   ```
+  cd ~
   git clone https://github.com/Nathanael-Mtd/telegram-led-alerter.git
   cd telegram-led-alerter
   python3 telegramLEDAlert.py -h
