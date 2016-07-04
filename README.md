@@ -11,6 +11,7 @@ Works with RaspberyPi and Pine64 with RPi.GPIO Python libraries in BCM mode.
   - A RaspberryPi or a Pine64
   - Wires
   - Many LEDs (not RGB)
+  - Resistors for LED (from 270Ω to 470Ω, search on the net)
   - A button or switch
 
 - Install requirements:
