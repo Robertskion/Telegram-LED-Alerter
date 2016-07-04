@@ -49,7 +49,7 @@ class YourBot(telepot.async.Bot):
         content_type, chat_type, chat_id = telepot.glance(msg)
         print(chat_type, chat_id, msg.get('text'), msg.get('from')['id'])
         input_state = 1
-        if chat_id == groupid and (msg.get('from')['id'] == userid if userid is not None else 1):
+        if GPIO.input(buttonGPIO) == 1 and chat_id == groupid and (msg.get('from')['id'] == userid if userid is not None else 1):
             try:
                 yield from bot.sendMessage(chat_id, "Alert started !")
                 start = time.time()
@@ -90,3 +90,4 @@ loop.create_task(bot.message_loop())
 print('Listening...')
 
 loop.run_forever()
+
