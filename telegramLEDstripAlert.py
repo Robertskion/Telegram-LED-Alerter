@@ -4,7 +4,7 @@ import argparse
 import time
 import asyncio
 import telepot
-import telepot.async
+import telepot.aio
 import RPi.GPIO as GPIO
 
 
@@ -44,35 +44,44 @@ def get_args():
     return l, b, s, t, g, u
 
 
-class YourBot(telepot.async.Bot):
+class TheBot(telepot.aio.Bot):
     @asyncio.coroutine
-    def handle(self, msg):
+    async def handle(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
         print(chat_type, chat_id, msg.get('text'), msg.get('from')['id'])
         input_state = 1
         if GPIO.input(buttonGPIO) == 1 and chat_id == groupid and (msg.get('from')['id'] == userid
                                                                    if userid is not None else 1):
             try:
-                yield from bot.sendMessage(chat_id, "Alert started !")
+                await bot.sendMessage(chat_id, "Alert started !")
                 start = time.time()
+                c = 0
                 while input_state == 1:
                     input_state = GPIO.input(buttonGPIO)
-                    for x in range(len(ledsGPIO)):
-                        LEDSch[x].start(100)
-                        time.sleep(blinkSpeed)
+                    if c is 0:
+                        for x in range(len(ledsGPIO)):
+                            LEDsCh[x].start(100)
+                            time.sleep(blinkSpeed)
+                        c = 1
                     for y in range(len(ledsGPIO)):
-                        LEDSch[y].start(0)
+                        LEDsCh[y].start(0)
+                        time.sleep(blinkSpeed)
+                        LEDsCh[y - 1].start(100)
                         if y is not max(range(len(ledsGPIO))):
                             time.sleep(blinkSpeed)
                     elapsed = int(time.time() - start)
                     if elapsed % 60 == 0 and elapsed is not 0:
                         minutes = str(int(elapsed / 60))
                         str_minutes = " minute" if minutes == "1" else " minutes"
-                        yield from bot.sendMessage(chat_id, "The alert is active for " + minutes + str_minutes)
+                        await bot.sendMessage(chat_id, "The alert is active for " + minutes + str_minutes)
             except KeyboardInterrupt:
+                for y in range(len(ledsGPIO)):
+                    LEDsCh[y].start(0)
                 GPIO.cleanup()
             if input_state == 0:
-                yield from bot.sendMessage(chat_id, "Alert stopped !")
+                for y in range(len(ledsGPIO)):
+                    LEDsCh[y].start(0)
+                await bot.sendMessage(chat_id, "Alert stopped !")
 
 
 ledsGPIO, buttonGPIO, blinkSpeed, token, groupid, userid = get_args()
@@ -81,13 +90,14 @@ print(get_args())
 # Prepare GPIO config
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-LEDSch = []
+LEDsCh = []
 for led in range(len(ledsGPIO)):
     GPIO.setup(ledsGPIO[led], GPIO.OUT)
-    LEDSch.append(GPIO.PWM(ledsGPIO[led], 100))
+    LEDsCh.append(GPIO.PWM(ledsGPIO[led], 100))
+    LEDsCh[led].start(0)
 GPIO.setup(buttonGPIO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-bot = YourBot(token)
+bot = TheBot(token)
 loop = asyncio.get_event_loop()
 
 loop.create_task(bot.message_loop())
