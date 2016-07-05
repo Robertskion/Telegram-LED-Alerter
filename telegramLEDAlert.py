@@ -69,7 +69,7 @@ class YourBot(telepot.async.Bot):
             except KeyboardInterrupt:
                 GPIO.cleanup()
             if input_state == 0:
-                yield from bot.sendMessage(chat_id, "Alert stopped by button !")
+                yield from bot.sendMessage(chat_id, "Alert stopped !")
 
 
 ledsGPIO, buttonGPIO, blinkSpeed, token, groupid, userid = get_args()
