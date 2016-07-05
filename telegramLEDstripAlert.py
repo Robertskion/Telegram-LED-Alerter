@@ -50,7 +50,6 @@ class YourBot(telepot.async.Bot):
         content_type, chat_type, chat_id = telepot.glance(msg)
         print(chat_type, chat_id, msg.get('text'), msg.get('from')['id'])
         input_state = 1
-        print(GPIO.input(buttonGPIO))
         if GPIO.input(buttonGPIO) == 1 and chat_id == groupid and (msg.get('from')['id'] == userid
                                                                    if userid is not None else 1):
             try:
