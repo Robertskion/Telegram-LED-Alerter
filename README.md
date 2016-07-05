@@ -10,7 +10,7 @@ Works with RaspberyPi and Pine64 with RPi.GPIO Python libraries in BCM mode.
 - Hardware requirements:
   - A RaspberryPi or a Pine64
   - Wires
-  - Many LEDs (not RGB)
+  - Many LEDs (not RGB) or LED strip ([Tutorial for LED RGB strip](http://popoklopsi.github.io/RaspberryPi-LedStrip))
   - Resistors for LED (from 270Ω to 470Ω, search on the net)
   - A button or switch
 
@@ -85,7 +85,14 @@ Python 3.5 is available on Debian testing and Ubuntu 16.04 LTS. To check the Pyt
   ```
   
 ## Example
-
+- Simple LEDs version:
+ 
   ```
   python3 telegramLEDAlert.py -l 17,22,5,12,24,18 -b 26 -s 0.5 -t 2xxxxxxxx:AAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -g -123456789 -u 12345678
+  ```
+  
+- LED strip version:
+  
+  ```
+  python3 telegramLEDstripAlert.py -l 17,22,24 -b 26 -s 0.5 -t 2xxxxxxxx:AAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -g -123456789 -u 12345678
   ```
