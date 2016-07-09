@@ -9,11 +9,9 @@ import RPi.GPIO as GPIO
 
 
 def get_args():
-    # Assign description to the help doc
     parser = argparse.ArgumentParser(
         description="Telegram LED alerting script - GPIO work in BCM mode",
         usage='use "./%(prog)s --help" for more information')
-    # Add arguments
     parser.add_argument(
         '-l', '--ledsGPIO', type=str, help='List of GPIO pins used by LEDs, values sparated by commas.',
         required=True, nargs='+')
@@ -30,16 +28,13 @@ def get_args():
         help='Telegram ID of user sending messages - Optional. If you don\'t enter userid'
              ', alerts going to start whatever '
              'the user who will send a message in the group ', required=False)
-    # Array for all arguments passed to script
     args = parser.parse_args()
-    # Assign args to variables
     l = [int(x) for x in args.ledsGPIO[0].split(",")]
     b = args.buttonGPIO
     s = args.speed
     t = args.token
     g = args.groupid
     u = args.userid
-    # Return all variable values
     return l, b, s, t, g, u
 
 
@@ -79,7 +74,6 @@ class TheBot(telepot.aio.Bot):
 
 ledsGPIO, buttonGPIO, blinkSpeed, token, groupid, userid = get_args()
 
-print(get_args())
 # Prepare GPIO config
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
