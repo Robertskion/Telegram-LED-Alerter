@@ -19,7 +19,7 @@ Works with RaspberyPi and Pine64 with RPi.GPIO Python libraries in BCM mode.
   ```
   sudo apt-get update
   sudo apt-get install build-essential python3-pip python3-dev git
-  pip3.5 install telepot
+  pip3 install telepot
   ```
   
 If the last command fail, you need to compille yourself Pythton 3.5 who is needed for asyncio module.
