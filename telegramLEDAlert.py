@@ -4,7 +4,7 @@ import argparse
 import time
 import asyncio
 import telepot
-import telepot.async
+import telepot.aio
 import RPi.GPIO as GPIO
 
 
